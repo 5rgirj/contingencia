@@ -1,0 +1,135 @@
+TABELA 05.1 (Tabela 20.1 - Lei nº 9.873/22)
+DOS OFÍCIOS E ATOS DO REGISTRO DE IMÓVEIS 
+
+Repasses:
+Lei 6370/2012 = 2%
+Lei 3217/99 FETJ = 20%
+FUNPERJ = 5%
+FUNDPERJ = 5%
+FUNARPEN = 4%
+Selos = 2,48
+
+	Function Repasses(custa){
+		lei6370 = (custa / 100) * 2;
+		lei2317 = (custa / 100) * 20;
+		funperj = (custa / 100) * 5;
+		fundperj= (custa / 100) * 5;
+		funarpen= (custa / 100) * 4;
+
+		total = lei6370 + lei2317 + funperj + fundperj + funarpen + custa;
+		exibe(total)
+}
+
+Atos, custa, gratuitos e pmcmv, Total
+maiorValor = Ufir(MaiorValor(valorDeclarado, valorPoderPublico), dataDoc)
+se (maiorValor < 15885) {
+	custa = 171,63
+	pmcmv = 3,43
+	total = 175,06
+	} se não
+se (maiorValor < 31770,01) {
+	custa = 246,78 
+	pmcmv = 4,93
+	total = 251,71
+	} se não
+se (maiorValor < 47.655,01) {
+	custa = 568,83 
+	pmcmv = 11,37
+	total = 580,20
+	} se não
+se (maiorValor <  63.540,02) {
+	custa = 697,60 
+	pmcmv = 13,95
+	total = 711,55
+	} se não
+se (maiorValor <  84.720,02) {
+	custa = 1.236,48
+	pmcmv = 24,72
+	total = 1.261,20
+	} se não
+se (maiorValor <  105.900,03) {
+	custa = 1.459,75
+	pmcmv = 29,19
+	total = 1.488,94
+	} se não
+se (maiorValor <  211.800,07) {
+	custa = 1.974,95
+	pmcmv = 39,49
+	total = 2.014,44
+	} se não
+se (maiorValor <  423.600,14) {
+	custa = 2.125,27
+	pmcmv = 42,50
+	total = 2.167,77
+	} se não ValorAcima(maiorValor)
+
+
+//Notas Integrantes 1)
+
+	function ValorACima(maiorValor){
+		maiorValor = maiorValor-423600,14
+		se valorACima%105900,03 !== 0{
+			faixa = valorACima/105900,03 + 1
+			} se não faixa = maiorValor/105900,03
+		custa = (faixa*190,37) + 2125,27
+		pmcmv = (faixa*3,80) + 42,50
+		total = custa + pmcmv
+		total = ValorMaximo(total)
+	}
+
+//Notas Integrantes 2)
+
+valorDeclarado, valorPoderPublico, maiorValor
+
+	Function MaiorValor(valorDeclarado, valorPoderPublico){
+		//Notas Integrantes 3)
+		se valorDeclarado == null valorDeclarado = 0
+		se valorPoderPublico == null alert('Por favor informe o valor declarado pelo poder publico. na hipótese do valor venal atribuído pelo Município em sua planta de valores para a cobrança de tributos, como o IPTU
+e o ITBI') 
+		se valorDeclarado < valorPoderPublico
+			return valorPoderPublico
+		se não return valorDeclarado
+}
+
+//Notas Integrantes 4)
+
+	Function ValorMaximo(total){
+		se total > valorMaxTJRJ {
+			return 73659,30
+		} se não return total
+	}
+
+//Notas Integrantes 5)
+//Inverter dados para verificação se ufir se aplica
+const ufir = [1.0641,
+    1.1283,
+    1.213,
+    1.3584,
+    1.4924,
+    1.6049,
+    1.6992,
+    1.7495,
+    1.8258,
+    1.9372,
+    2.0183,
+    2.1352,
+    2.2752,
+    2.4066,
+    2.5473,
+    2.7119,
+    3.0023,
+    3.1999,
+    3.2939,
+    3.4211,
+    3.555,
+    3.7053,
+    4.0915,
+    4.3329,
+    ];
+
+        Function Ufir(maiorValor, dataDoc, anoUfir){
+		se dataDoc > 1 ano{
+		return (emol/ufir[dataDoc])*ufir[anoUfir];
+		}
+		se não return maiorValor
+	}

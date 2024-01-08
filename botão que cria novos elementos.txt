@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botão para Adicionar Elementos</title>
+  <style>
+    /* Estilo opcional para melhorar a aparência */
+    .elemento {
+      margin: 5px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<button id="adicionarElemento">Adicionar Elemento</button>
+<div id="containerElementos"></div>
+
+<script>
+  // Função para adicionar um novo elemento ao clicar no botão
+  function adicionarElemento() {
+    // Cria um novo elemento div
+    var novoElemento = document.createElement("div");
+    novoElemento.className = "elemento"; // Adiciona uma classe para estilização opcional
+    novoElemento.textContent = "Novo Elemento";
+
+    // Adiciona o novo elemento ao contêiner
+    document.getElementById("containerElementos").appendChild(novoElemento);
+  }
+
+  // Obtém o botão pelo ID e adiciona um ouvinte de evento de clique
+  document.getElementById("adicionarElemento").addEventListener("click", adicionarElemento);
+</script>
+
+</body>
+</html>
