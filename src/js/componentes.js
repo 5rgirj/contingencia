@@ -2,8 +2,9 @@
 var input = document.createElement("input");
 input.type = "number";
 input.className = "form-control";
+input.id = "emolumento";
 input.placeholder = "R$";
-input.name = "moeda";
+input.name = "quantidaed";
 input.step = "0.01";
 input.min = "0.01";
 
@@ -18,62 +19,35 @@ small.classList.add("form-text", "text-muted");
 small.textContent =
   "Quando o valor declarado para o ato for diverso do atribuído pelo Poder Público, para efeito de qualquer natureza, os emolumentos serão calculados pelo maior valor.";
 
-//** ------------------------------------------------------------------------------------------- */
+// Gera o componente Select com os elementos
+const elementos = [
+  "Registro Simples",
+  "1ª Aquisição",
+  "1ª Aquisição com SFH",
+  "Alienação ou Mutuo",
+  "Locação",
+  "Nua Propriedade",
+  "Doação c/ Reserva de Usufruto",
+  "Memorial de Incorporação",
+  "Instituição de Condominio",
+  "Averbação c/ Valor Econômico",
+  "Averbação",
+  "Desmembramento/Remembramento",
+  "Convenção e Condomínio",
+  "Certidão",
+  "Intimação Devedor",
+  "Intimação em Geral",
+  "Exame de Legalidade",
+  "Reconhecimento de Usucapião",
+  "Publicidade Eletrônica",
+];
 
-// Gera um componente input Para Data
-var inputDate = document.createElement("input");
-inputDate.type = "date";
-inputDate.className = "form-control";
-inputDate.name = "data";
+var selectElement = document.createElement("select");
+selectElement.classList.add("form-select", "form-select-sm");
+selectElement.id = "selectElement" + idElementos;
+idElementos++;
 
-// Gera um componente Label Para Data
-var labelData = document.createElement("label");
-labelData.className = "form-label";
-labelData.textContent = "Data do Documento";
-
-// Gera um componente Small para Data
-var smallData = document.createElement("small");
-smallData.classList.add("form-text", "text-muted");
-smallData.textContent =
-  "Caso o documento tenha mais de 1 ano na data de hoje, atualização da ufir será aplicada";
-//** ------------------------------------------------------------------------------------------- */
-
-// Obtém o elemento select
-var selectElement = document.getElementById("selectElement" + idElementos);
-
-// Adiciona um ouvinte de evento 'change' ao elemento select
-selectElement.addEventListener('change', function() {
-  // Obtém o valor da opção selecionada
-  var selectedOption = selectElement.value;
-
-  // Chama a função desejada com o valor da opção selecionada
-  minhaFuncao(selectedOption);
-});
-
-// Função a ser executada quando a opção for alterada
-function minhaFuncao(valorSelecionado) {
-  console.log('Opção selecionada:', valorSelecionado);
-  // Adicione aqui o código que você deseja executar com o valor selecionado
-}
-
-//** ------------------------------------------------------------------------------------------- */
-
-// Obtém todos os elementos select na página
-var selects = document.querySelectorAll('select');
-
-// Adiciona um ouvinte de evento 'change' para cada elemento select
-selects.forEach(function(select) {
-  select.addEventListener('change', function() {
-    // Obtém o valor da opção selecionada
-    var selectedOption = select.value;
-
-    // Chama a função desejada com o valor da opção selecionada
-    minhaFuncao(selectedOption);
-  });
-});
-
-// Função a ser executada quando a opção for alterada
-function minhaFuncao(valorSelecionado) {
-  console.log('Opção selecionada:', valorSelecionado);
-  // Adicione aqui o código que você deseja executar com o valor selecionado
+for (var i = 0; i < elementos.length; i++) {
+  selectElement.innerHTML +=
+    "<option value='" + i + "'>" + elementos[i] + "</option>";
 }

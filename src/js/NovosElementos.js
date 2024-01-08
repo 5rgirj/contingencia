@@ -21,8 +21,29 @@ const elementos = [
 ];
 
 var idElementos = 0;
-adicionarElemento();
+
 function adicionarElemento() {
+  // Gera um componente input
+  var input = document.createElement("input");
+  input.type = "number";
+  input.className = "form-control";
+  input.id = "emolumento";
+  input.placeholder = "R$";
+  input.name = "quantidaed";
+  input.step = "0.01";
+  input.min = "0.01";
+
+  // Gera um componente Label
+  var label = document.createElement("label");
+  label.className = "form-label";
+  label.textContent = "Valor Declarado";
+
+  // Gera um componente Small
+  var small = document.createElement("small");
+  small.classList.add("form-text", "text-muted");
+  small.textContent =
+    "Quando o valor declarado para o ato for diverso do atribuído pelo Poder Público, para efeito de qualquer natureza, os emolumentos serão calculados pelo maior valor.";
+
   var cardElement = document.createElement("div");
   cardElement.classList.add("card");
   cardElement.id = "cardElement" + idElementos;
@@ -38,18 +59,17 @@ function adicionarElemento() {
   idElementos++;
 
   cardBodyElement.appendChild(selectElement);
-  selects = document.querySelectorAll("select");
-  
+  cardBodyElement.appendChild(document.createElement("br"));
+  cardBodyElement.appendChild(label);
+  cardBodyElement.appendChild(input);
+  cardBodyElement.appendChild(small);
+
   for (var i = 0; i < elementos.length; i++) {
     selectElement.innerHTML +=
       "<option value='" + i + "'>" + elementos[i] + "</option>";
   }
-  document
-    .getElementById("containerElementos")
-    .appendChild(document.createElement("br"));
-  document
-    .getElementById("containerElementos")
-    .appendChild(cardElement);
+  document.getElementById("containerElementos").appendChild(document.createElement("br"))
+  document.getElementById("containerElementos").appendChild(cardElement);
 }
 
 function removerElemento() {
@@ -66,23 +86,3 @@ document
 document
   .getElementById("removerElemento")
   .addEventListener("click", removerElemento);
-
-// Obtém todos os elementos select na página
-var selects = document.querySelectorAll("select");
-
-// Adiciona um ouvinte de evento 'change' para cada elemento select
-selects.forEach(function (select) {
-  select.addEventListener("change", function () {
-    // Obtém o valor da opção selecionada
-    var selectedOption = select.value;
-
-    // Chama a função desejada com o valor da opção selecionada
-    minhaFuncao(selectedOption);
-  });
-});
-
-// Função a ser executada quando a opção for alterada
-function minhaFuncao(valorSelecionado) {
-  console.log("Opção selecionada:", valorSelecionado);
-  // Adicione aqui o código que você deseja executar com o valor selecionado
-}

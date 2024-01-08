@@ -3,8 +3,8 @@ const ufir = [
   2.0183, 2.1352, 2.2752, 2.4066, 2.5473, 2.7119, 3.0023, 3.1999, 3.2939,
   3.4211, 3.555, 3.7053, 4.0915, 4.3329,4.5373
 ];
-taxaJudiciariaMax = 77134.1;
-valorPorFaixa = 199.35;
+taxaJudiciariaMax = 73659.3;
+valorPorFaixa = 190.37;
 
 class Emolumento {
   constructor(valor, dataFornecida, tipo, paquisicaoSFH, paquisicao) {
@@ -27,32 +27,32 @@ class Emolumento {
 
     // Nota integrante nº 6
     if (diferencaEmAnos > 1) {
-      valor = (valor / ufir[Math.floor(diferencaEmAnos)]) * ufir[24];
+      valor = (valor / ufir[Math.floor(diferencaEmAnos)]) * ufir[23];
     }
     //tabela 05.1
     if (tipo === "registro") {
       valor === 0
-        ? (this.valor = 179.72)
-        : valor <= 16634.35
-        ? (this.valor = 258.42)
-        : valor <= 33268.72
-        ? (this.valor = 427.01)
-        : valor <= 49903.08
-        ? (this.valor = 595.66)
-        : valor <= 66537.45
-        ? (this.valor = 730.50)
-        : valor <= 88716.59
-        ? (this.valor = 1294.80)
-        : valor <= 110895.75
-        ? (this.valor = 1528.61)
-        : valor <= 221791.51
-        ? (this.valor = 2068.11)
-        : valor <= 443583.03
-        ? (this.valor = 2225.52)
+        ? (this.valor = 171.63)
+        : valor <= 15885
+        ? (this.valor = 246.78)
+        : valor <= 31770.01
+        ? (this.valor = 407.78)
+        : valor <= 47655.01
+        ? (this.valor = 568.83)
+        : valor <= 63540.02
+        ? (this.valor = 697.6)
+        : valor <= 84720.02
+        ? (this.valor = 1236.48)
+        : valor <= 105900.03
+        ? (this.valor = 1459.75)
+        : valor <= 211800.07
+        ? (this.valor = 1974.95)
+        : valor <= 423600.14
+        ? (this.valor = 2125.27)
         : (this.valor =
-            (valor - 443583.03) % 110895.75 !== 0
-              ? Math.floor((valor - 443583.03) / 110895.75 + 1) * valorPorFaixa + 2225.52
-              : ((valor - 443583.03) / 110895.75) * valorPorFaixa + 2225.52); //Calcula a regra descrita nas notas integrantes nº1 para valores acima de 423600,14
+            (valor - 423600.14) % 105900.03 !== 0
+              ? Math.floor(valor / 105900.03 + 1) * valorPorFaixa + 2125.27
+              : (valor / 105900.03) * valorPorFaixa + 2125.27); //Calcula a regra descrita nas notas integrantes nº1 para valores acima de 423600,14
 
       if (this.valor > taxaJudiciariaMax) {
         this.valor = taxaJudiciariaMax;
@@ -102,7 +102,7 @@ class Emolumento {
 
   apresentar() {
     console.log(
-      `Este imóvel custa ${this.valor}\nPmcmv: ${this.pmcmv}\nfetj: ${this.fetj}\nfunperj: ${this.funperj}\nfundperj ${this.fundperj}\nfunarpen ${this.funarpen}\nTotal: ${this.total}`
+      `Este imóvel custa ${this.valor}\nPmcmv: ${this.pmcmv}\nfetj: ${this.fetj}\nfunperj: ${this.funperj}\nfundperj ${this.fundperj}\nfunarpen ${this.funarpen}\nselo ${this.selo}\nTotal: ${this.total}`
     );
   }
 }
@@ -112,31 +112,31 @@ console.log("Verificar se os valores são calculados corretamente\n\n");
 const emol = new Emolumento(0, "2023-12-20", "registro");
 emol.apresentar();
 
-const emol2 = new Emolumento(16634.35, "2023-12-20", "registro");
+const emol2 = new Emolumento(15885, "2023-12-20", "registro");
 emol2.apresentar();
 
-const emol3 = new Emolumento(33268.72, "2023-12-20", "registro");
+const emol3 = new Emolumento(31770.01, "2023-12-20", "registro");
 emol3.apresentar();
 
-const emol4 = new Emolumento(49903.08, "2023-12-20", "registro");
+const emol4 = new Emolumento(47655.01, "2023-12-20", "registro");
 emol4.apresentar();
 
-const emol5 = new Emolumento(66537.45, "2023-12-20", "registro");
+const emol5 = new Emolumento(63540.02, "2023-12-20", "registro");
 emol5.apresentar();
 
-const emol6 = new Emolumento(88716.59, "2023-12-20", "registro");
+const emol6 = new Emolumento(84720.02, "2023-12-20", "registro");
 emol6.apresentar();
 
-const emol7 = new Emolumento(110895.75, "2023-12-20", "registro");
+const emol7 = new Emolumento(105900.03, "2023-12-20", "registro");
 emol7.apresentar();
 
-const emol8 = new Emolumento(221791.51, "2023-12-20", "registro");
+const emol8 = new Emolumento(211800.07, "2023-12-20", "registro");
 emol8.apresentar();
 
-const emol9 = new Emolumento(443583.03, "2023-12-20", "registro");
+const emol9 = new Emolumento(423600.14, "2023-12-20", "registro");
 emol9.apresentar();
 
-const emol10 = new Emolumento(443583.04, "2023-12-20", "registro");
+const emol10 = new Emolumento(423600.15, "2023-12-20", "registro");
 emol10.apresentar();
 
 const emol11 = new Emolumento(1000000000, "2023-12-20", "registro");
