@@ -21,8 +21,11 @@ const elementos = [
 ];
 
 var idElementos = 0;
+// Obtém todos os elementos select na página
+var selects = document.querySelectorAll("select");
 adicionarElemento();
 function adicionarElemento() {
+  
   var cardElement = document.createElement("div");
   cardElement.classList.add("card");
   cardElement.id = "cardElement" + idElementos;
@@ -38,7 +41,7 @@ function adicionarElemento() {
   idElementos++;
 
   cardBodyElement.appendChild(selectElement);
-  selects = document.querySelectorAll("select");
+
   
   for (var i = 0; i < elementos.length; i++) {
     selectElement.innerHTML +=
@@ -50,6 +53,18 @@ function adicionarElemento() {
   document
     .getElementById("containerElementos")
     .appendChild(cardElement);
+
+    selects = document.querySelectorAll("select");
+    // Adiciona um ouvinte de evento 'change' para cada elemento select
+  selects.forEach(function (select) {
+    select.addEventListener("change", function () {
+      // Obtém o valor da opção selecionada
+      var selectedOption = select.value;
+  
+      // Chama a função desejada com o valor da opção selecionada
+      minhaFuncao(selectedOption);
+    });
+  });
 }
 
 function removerElemento() {
@@ -67,19 +82,8 @@ document
   .getElementById("removerElemento")
   .addEventListener("click", removerElemento);
 
-// Obtém todos os elementos select na página
-var selects = document.querySelectorAll("select");
 
-// Adiciona um ouvinte de evento 'change' para cada elemento select
-selects.forEach(function (select) {
-  select.addEventListener("change", function () {
-    // Obtém o valor da opção selecionada
-    var selectedOption = select.value;
 
-    // Chama a função desejada com o valor da opção selecionada
-    minhaFuncao(selectedOption);
-  });
-});
 
 // Função a ser executada quando a opção for alterada
 function minhaFuncao(valorSelecionado) {
