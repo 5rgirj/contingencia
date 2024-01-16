@@ -1,10 +1,12 @@
 const ufir = [
   1.0641, 1.1283, 1.213, 1.3584, 1.4924, 1.6049, 1.6992, 1.7495, 1.8258, 1.9372,
   2.0183, 2.1352, 2.2752, 2.4066, 2.5473, 2.7119, 3.0023, 3.1999, 3.2939,
-  3.4211, 3.555, 3.7053, 4.0915, 4.3329,4.5373
+  3.4211, 3.555, 3.7053, 4.0915, 4.3329, 4.5373,
 ];
-taxaJudiciariaMax = 73659.3;
-valorPorFaixa = 190.37;
+const taxaJudiciariaMax = 73659.3;
+const valorPorFaixa = 190.37;
+const valorPorFaixaPmcmv = 3.8;
+
 
 class Emolumento {
   constructor(valor, dataFornecida, tipo, paquisicaoSFH, paquisicao) {
@@ -27,11 +29,12 @@ class Emolumento {
 
     // Nota integrante nº 6
     if (diferencaEmAnos > 1) {
-      valor = (valor / ufir[Math.floor(diferencaEmAnos)]) * ufir[23];
+      valor = (valor / ufir[23 - Math.floor(diferencaEmAnos)]) * ufir[23];
+      console.log(valor);
     }
     //tabela 05.1
-    if (tipo === "registro") {
-      valor === 0
+    if (tipo > 0 && tipo < 8) {
+      valor == 0
         ? (this.valor = 171.63)
         : valor <= 15885
         ? (this.valor = 246.78)
@@ -59,8 +62,29 @@ class Emolumento {
       } //Nota Integrante 4 valor não pode superar taxa judiciaria maxima
     }
 
+    if (tipo > 7 && tipo < 10){
+      valor <= 105900.03
+      ? (this.valor = 1600.66)
+      : valor <= 529500.18
+      ? (this.valor = 2567.71)
+      : valor <= 847200.29
+      ? (this.valor = 3572.42)
+      : valor <= 1059000.36
+      ? (this.valor = 4074.76)
+      : (this.valor =
+          (valor - 1059000.36) % 105900.03 !== 0
+            ? Math.floor(valor / 105900.03 + 1) * valorPorFaixa + 4074.76
+            : (valor / 105900.03) * valorPorFaixa + 4074.76); //Calcula a regra descrita nas notas integrantes nº1 para valores acima de 423600,14
+
+    if (this.valor > taxaJudiciariaMax*4) {
+      this.valor = taxaJudiciariaMax*4;
+    } //Nota Integrante 4 valor não pode superar taxa judiciaria maxima
+
+    }
     this.pmcmv =
-      Math.floor((this.valor / 100) * 2 * Math.pow(10, 2)) / Math.pow(10, 2);
+      (valor - 1059000.36) % 105900.03 !== 0
+      ? Math.floor(valor / 105900.03 + 1) * valorPorFaixaPmcmv + 42.5
+      : (valor / 105900.03) * valorPorFaixaPmcmv + 42.5 //Calcula a regra descrita nas notas integrantes nº1 para Pmcmv em valores acima de 423600,14
     this.fetj =
       Math.floor((this.valor / 100) * 20 * Math.pow(10, 2)) / Math.pow(10, 2);
     this.funperj =
@@ -71,18 +95,19 @@ class Emolumento {
       Math.floor((this.valor / 100) * 4 * Math.pow(10, 2)) / Math.pow(10, 2);
     this.selo = 4.96;
 
-    //Nota Integrante 7 Primeira aquisição pelo sistema financeiro de habitação
-    if (paquisicaoSFH) {
-      this.valor = this.valor / 2;
+    //Nota Integrante 8 Primeira Aquisição
+    if (tipo == 2) {
+      this.valor = this.valor;
       this.pmcmv = 0;
       this.fetj = 0;
       this.funperj = 0;
       this.fundperj = 0;
       this.funarpen = 0;
     }
-    //Nota Integrante 8 Primeira Aquisição
-    if (paquisicao) {
-      this.valor = this.valor;
+
+    //Nota Integrante 7 Primeira aquisição pelo sistema financeiro de habitação
+    if (tipo == 3) {
+      this.valor = this.valor / 2;
       this.pmcmv = 0;
       this.fetj = 0;
       this.funperj = 0;
@@ -107,6 +132,10 @@ class Emolumento {
   }
 }
 
+// Exportar a classe para que ela possa ser importada em outros arquivos
+export default Emolumento;
+
+/*
 // Testes:
 console.log("Verificar se os valores são calculados corretamente\n\n");
 const emol = new Emolumento(0, "2023-12-20", "registro");
@@ -154,3 +183,4 @@ emol13.apresentar();
 
 const emol14 = new Emolumento(15885, "2023-12-20", "registro", false, true);
 emol14.apresentar();
+*/
