@@ -1,4 +1,4 @@
-import Emolumento from './emolumento2023.js';
+import Emolumento from "./emolumento2023.js";
 
 const elementos = [
   "Selecione o item de cobrança",
@@ -76,6 +76,12 @@ function removerElemento() {
   elementoParaRemover.remove();
   idElementos--;
 }
+
+// Adiciona um evento de clique ao botão
+document.getElementById("btnRecarregar").addEventListener("click", function () {
+  // Recarrega a página
+  location.reload();
+});
 document
   .getElementById("adicionarElemento")
   .addEventListener("click", adicionarElemento);
@@ -363,41 +369,50 @@ function geraItem(item, id) {
   }
 }
 
-document.getElementById('calcularEmolumentos').addEventListener('click', function () {
-  
-  for (var i = 0; i < idElementos; i++) {
+document
+  .getElementById("calcularEmolumentos")
+  .addEventListener("click", function () {
+    var imprimeValor = document.createElement("p");
+    var total
+
+    for (var i = 0; i < idElementos; i++) {
       //obter o elemento
-      var elemento = document.getElementById("card-body" + (i));
-      var campos = elemento.getElementsByClassName('form-control');
-      var valor
-      var data
+      var elemento = document.getElementById("card-body" + i);
+      var campos = elemento.getElementsByClassName("form-control");
+      var valor;
+      var data;
 
       // Obter valores dos campos
-      var tipo = elemento.querySelector('select').value;
-      if (tipo > 0 && tipo <5){
-      valor = campos[0].value
-      data = campos[1].value
+      var tipo = elemento.querySelector("select").value;
+      if (tipo > 0 && tipo < 5) {
+        valor = campos[0].value;
+        data = campos[1].value;
       }
-      if (tipo == 5){
-      valor = campos[0].value * campos[1].value
-      data = campos[2].value
+      if (tipo == 5) {
+        valor = campos[0].value * campos[1].value;
+        data = campos[2].value;
       }
-      if (tipo == 6){
-        valor = campos[0].value/2
-        data = campos[1].value
+      if (tipo == 6) {
+        valor = campos[0].value / 2;
+        data = campos[1].value;
       }
-      if (tipo > 7 && tipo < 10){
-        valor =Number(campos[0].value)  + Number(campos[1].value)
-        data = campos[2].value
-        }
+      if (tipo > 7 && tipo < 10) {
+        valor = Number(campos[0].value) + Number(campos[1].value);
+        data = campos[2].value;
+      }
 
       console.log(tipo, valor, data);
 
-          var emolumento = new Emolumento(valor, data, tipo)
-          emolumento.apresentar()
-
-          var result = document.getElementById("result")
-          var total = document.createElement("p")
-          total.textContent = "Valor do Registro = " + emolumento.total 
-          result.appendChild(total)
-}})
+      var emolumento = new Emolumento(valor, data, tipo);
+      emolumento.apresentar();
+      total = Number(total + elemento.total)
+      var result = document.getElementById("result");
+      imprimeValor.textContent += "Valor do Registro =  " + emolumento.total
+    }
+    imprimeValor.textContent += i+1 + " Selos: " + (i+1) * 4.96;
+    imprimeValor.textContent += " Prenotação: " + 5.10;
+    total = Number(total + ((i+1) * 4.96) + 5.10)
+    console.log(total)
+    imprimeValor.textContent += "Total: " + total
+    result.appendChild(imprimeValor);
+  });
