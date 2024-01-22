@@ -29,7 +29,7 @@ var selects = document.querySelectorAll("select");
 adicionarElemento();
 function adicionarElemento() {
   var cardElement = document.createElement("div");
-  cardElement.classList.add("card", "col-10", "m-2", "col-md-5", "col-lg-3");
+  cardElement.classList.add("card", "col-lg-3", "col-10", "m-4");
   cardElement.id = "cardElement" + idElementos;
 
   var cardBodyElement = document.createElement("div");
@@ -257,7 +257,7 @@ function geraItem(item, id) {
 
   var titulo = document.createElement("h3");
   titulo.textContent = elementos[item];
-
+  titulo.className = "text-center"
   //fimComponentes
 
   console.log("Gera item: " + item + " do elemento: " + (id - 1));
@@ -450,8 +450,8 @@ document
     imprimeValorGuiaCom.textContent +=
       quantGuiaCom * 2 + " Notfificação/Intimação: " + totalGuiaCom;
 
-    imprimeValorIss.textContent += "Iss: " + valorIss;
-    imprimeValorTotal.textContent += "Total: " + valorTotal;
+    imprimeValorIss.textContent += "Iss: " + valorIss.toFixed(2);;
+    imprimeValorTotal.textContent += "Total: " + valorTotal.toFixed(2);;
     result.appendChild(imprimeValorSelo);
     result.appendChild(imprimeValorPrenotacao);
     if (document.getElementById("bib").value != 0) {
