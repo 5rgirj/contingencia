@@ -3,9 +3,9 @@ const ufir = [
   2.0183, 2.1352, 2.2752, 2.4066, 2.5473, 2.7119, 3.0023, 3.1999, 3.2939,
   3.4211, 3.555, 3.7053, 4.0915, 4.3329, 4.5373,
 ];
-const taxaJudiciariaMax = 73659.3;
-const valorPorFaixa = 190.37;
-const valorPorFaixaPmcmv = 3.8;
+const taxaJudiciariaMax = 77134.10;
+const valorPorFaixa = 199.35;
+const valorPorFaixaPmcmv = 3.98;
 
 
 class Emolumento {
@@ -32,33 +32,33 @@ class Emolumento {
       valor = (valor / ufir[23 - Math.floor(diferencaEmAnos)]) * ufir[23];
       console.log(valor);
     }
-    if (tipo == "prenotacao"){
+    if (tipo == "acessorio"){
       this.valor = valor
     }
     //tabela 05.1
     if (tipo > 0 && tipo < 8) {
       valor == 0
-        ? (this.valor = 171.63)
-        : valor <= 15885
-        ? (this.valor = 246.78)
-        : valor <= 31770.01
-        ? (this.valor = 407.78)
-        : valor <= 47655.01
-        ? (this.valor = 568.83)
-        : valor <= 63540.02
-        ? (this.valor = 697.6)
-        : valor <= 84720.02
-        ? (this.valor = 1236.48)
-        : valor <= 105900.03
-        ? (this.valor = 1459.75)
-        : valor <= 211800.07
-        ? (this.valor = 1974.95)
-        : valor <= 423600.14
-        ? (this.valor = 2125.27)
+        ? (this.valor = 179.72)
+        : valor <= 16634.35
+        ? (this.valor = 258.42)
+        : valor <= 33268.72
+        ? (this.valor = 427.01)
+        : valor <= 49903.08
+        ? (this.valor = 595.66)
+        : valor <= 66537.45
+        ? (this.valor = 730.50)
+        : valor <= 88716.59
+        ? (this.valor = 1294.80)
+        : valor <= 110895.75
+        ? (this.valor = 1528.61)
+        : valor <= 221791.51
+        ? (this.valor = 2068.11)
+        : valor <= 443583.03
+        ? (this.valor = 2225.52)
         : (this.valor =
-            (valor - 423600.14) % 105900.03 !== 0
-              ? Math.floor((valor - 423600.14) / 105900.03 + 1) * valorPorFaixa + 2125.27
-              : (valor / 105900.03) * valorPorFaixa + 2125.27); //Calcula a regra descrita nas notas integrantes nº1 para valores acima de 423600,14
+            (valor - 443583.03) % 110895.75 !== 0
+              ? Math.floor((valor - 443583.03) / 110895.75 + 1) * valorPorFaixa + 2225.52
+              : (valor / 110895.75) * valorPorFaixa + 2225.52); //Calcula a regra descrita nas notas integrantes nº1 para valores acima de 423600,14
 
       if (this.valor > taxaJudiciariaMax) {
         this.valor = taxaJudiciariaMax;
@@ -66,18 +66,18 @@ class Emolumento {
     }
 
     if (tipo > 7 && tipo < 10){
-      valor <= 105900.03
-      ? (this.valor = 1600.66)
-      : valor <= 529500.18
-      ? (this.valor = 2567.71)
-      : valor <= 847200.29
-      ? (this.valor = 3572.42)
-      : valor <= 1059000.36
-      ? (this.valor = 4074.76)
+      valor <= 110895.75
+      ? (this.valor = 1676.16)
+      : valor <= 554478.79
+      ? (this.valor = 2688.83)
+      : valor <= 887166.07
+      ? (this.valor = 3740.94)
+      : valor <= 1108957.58
+      ? (this.valor = 4266.98)
       : (this.valor =
-          (valor - 1059000.36) % 105900.03 !== 0
-            ? Math.floor(valor / 105900.03 + 1) * valorPorFaixa + 4074.76
-            : (valor / 105900.03) * valorPorFaixa + 4074.76); //Calcula a regra descrita nas notas integrantes nº1 para valores acima de 423600,14
+          (valor - 1108957.58) % 110895.75 !== 0
+            ? Math.floor((valor - 1108957.58) / 110895.753 + 1) * valorPorFaixa + 4074.76
+            : (valor / 110895.75) * valorPorFaixa + 4266.98); //Calcula a regra descrita nas notas integrantes nº1 para valores acima de 423600,14
 
     if (this.valor > taxaJudiciariaMax*4) {
       this.valor = taxaJudiciariaMax*4;
@@ -85,11 +85,11 @@ class Emolumento {
 
     }
     
-    if (this.valor > 4074.76){
+    if (this.valor > 2225.52){
       this.pmcmv = 
-      (valor - 1059000.36) % 105900.03 !== 0
-      ? Math.floor(valor / 105900.03 + 1) * valorPorFaixaPmcmv + 42.5
-      : (valor / 105900.03) * valorPorFaixaPmcmv + 42.5 //Calcula a regra descrita nas notas integrantes nº1 para Pmcmv em valores acima de 423600,14
+      (valor - 443583.03) % 110895.75 !== 0
+      ? Math.floor((valor - 443583.03) / 110895.75 + 1) * valorPorFaixaPmcmv + 44.51
+      : (valor / 110895.75) * valorPorFaixaPmcmv + 44.51 //Calcula a regra descrita nas notas integrantes nº1 para Pmcmv em valores acima de 423600,14
     } else{
       this.pmcmv = Math.floor((this.valor / 100) * 2 * Math.pow(10, 2)) / Math.pow(10, 2);
 
@@ -124,14 +124,14 @@ class Emolumento {
       this.funarpen = 0;
     }
 
-    this.total = (
+    this.total = Number((
       this.valor +
       this.pmcmv +
       this.fetj +
       this.funperj +
       this.fundperj +
       this.funarpen
-    ).toFixed(2);
+    ).toFixed(2));
   }
 
   apresentar() {

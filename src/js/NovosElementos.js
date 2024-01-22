@@ -1,4 +1,4 @@
-import Emolumento from "./emolumento2023.js";
+import Emolumento from "./emolumento2024.js";
 
 const elementos = [
   "Selecione o item de cobrança",
@@ -372,8 +372,10 @@ function geraItem(item, id) {
 document
   .getElementById("calcularEmolumentos")
   .addEventListener("click", function () {
-    var imprimeValor = document.createElement("p");
-    var total
+    var total = 0;
+    var totalEmol = 0;
+    var totalPmcmv = 0;
+    var quantGuiaCom = 0;
 
     for (var i = 0; i < idElementos; i++) {
       //obter o elemento
@@ -387,6 +389,7 @@ document
       if (tipo > 0 && tipo < 5) {
         valor = campos[0].value;
         data = campos[1].value;
+        quantGuiaCom += 1;
       }
       if (tipo == 5) {
         valor = campos[0].value * campos[1].value;
@@ -403,16 +406,60 @@ document
 
       console.log(tipo, valor, data);
 
+      var imprimeValor = document.createElement("li");
+
       var emolumento = new Emolumento(valor, data, tipo);
       emolumento.apresentar();
-      total = Number(total + elemento.total)
+      total += emolumento.total;
+      totalEmol += emolumento.valor;
+      totalPmcmv += emolumento.pmcmv;
       var result = document.getElementById("result");
-      imprimeValor.textContent += "Valor do Registro =  " + emolumento.total
+      imprimeValor.textContent += "Valor do Registro =  " + emolumento.total;
+      result.appendChild(imprimeValor);
     }
-    imprimeValor.textContent += i+1 + " Selos: " + (i+1) * 4.96;
-    imprimeValor.textContent += " Prenotação: " + 5.10;
-    total = Number(total + ((i+1) * 4.96) + 5.10)
-    console.log(total)
-    imprimeValor.textContent += "Total: " + total
-    result.appendChild(imprimeValor);
+    var imprimeValorTotal = document.createElement("li");
+    var imprimeValorSelo = document.createElement("li");
+    var imprimeValorPrenotacao = document.createElement("li");
+    var imprimeValorBib = document.createElement("li");
+    var imprimeValorGuiaCom = document.createElement("li");
+    var imprimeValorIss = document.createElement("li");
+
+    var valorSelo = (i + 1) * 2.59;
+    var valorPrenotacao = 29.14;
+    var valorGuiaCom = 41.91 * (quantGuiaCom * 2);
+    var guiaComPmcmv = 0.83 * (quantGuiaCom * 2);
+    var totalGuiaCom = 56.97 * (quantGuiaCom * 2);
+    var valorBib = Number(document.getElementById("bib").value) * 29.39;
+    var prenotacao = new Emolumento(valorPrenotacao, Date(), "acessorio");
+
+    var valorIss =
+      (totalEmol +
+        totalPmcmv +
+        prenotacao.valor +
+        prenotacao.pmcmv +
+        valorGuiaCom +
+        guiaComPmcmv) *
+      0.05263157;
+    var valorTotal =
+      valorSelo + valorBib + prenotacao.total + total + valorIss + totalGuiaCom;
+
+    imprimeValorSelo.textContent += i + 1 + " Selos: " + valorSelo;
+    imprimeValorPrenotacao.textContent += " Prenotação: " + prenotacao.total;
+    imprimeValorBib.textContent +=
+      document.getElementById("bib").value + " Bib: " + valorBib;
+    imprimeValorGuiaCom.textContent +=
+      quantGuiaCom * 2 + " Notfificação/Intimação: " + totalGuiaCom;
+
+    imprimeValorIss.textContent += "Iss: " + valorIss;
+    imprimeValorTotal.textContent += "Total: " + valorTotal;
+    result.appendChild(imprimeValorSelo);
+    result.appendChild(imprimeValorPrenotacao);
+    if (document.getElementById("bib").value != 0) {
+      result.appendChild(imprimeValorBib);
+    }
+    if (valorGuiaCom != 0) {
+      result.appendChild(imprimeValorGuiaCom);
+    }
+    result.appendChild(imprimeValorIss);
+    result.appendChild(imprimeValorTotal);
   });
