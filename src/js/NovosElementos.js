@@ -406,7 +406,7 @@ document
 
       console.log(tipo, valor, data);
 
-      var imprimeValor = document.createElement("li");
+      var imprimeValor = document.createElement("tr");
 
       var emolumento = new Emolumento(valor, data, tipo);
       emolumento.apresentar();
@@ -414,15 +414,15 @@ document
       totalEmol += emolumento.valor;
       totalPmcmv += emolumento.pmcmv;
       var result = document.getElementById("result");
-      imprimeValor.textContent += "Valor do Registro =  " + emolumento.total;
+      imprimeValor.innerHTML += "<th scope='row'>" + elementos[tipo] + "</th> <td>" + 1 + "</td><td>" + emolumento.total + "</td>";
       result.appendChild(imprimeValor);
     }
-    var imprimeValorTotal = document.createElement("li");
-    var imprimeValorSelo = document.createElement("li");
-    var imprimeValorPrenotacao = document.createElement("li");
-    var imprimeValorBib = document.createElement("li");
-    var imprimeValorGuiaCom = document.createElement("li");
-    var imprimeValorIss = document.createElement("li");
+    var imprimeValorTotal = document.createElement("tr");
+    var imprimeValorSelo = document.createElement("tr");
+    var imprimeValorPrenotacao = document.createElement("tr");
+    var imprimeValorBib = document.createElement("tr");
+    var imprimeValorGuiaCom = document.createElement("tr");
+    var imprimeValorIss = document.createElement("tr");
 
     var valorSelo = (i + 1) * 2.59;
     var valorPrenotacao = 29.14;
@@ -443,15 +443,13 @@ document
     var valorTotal =
       valorSelo + valorBib + prenotacao.total + total + valorIss + totalGuiaCom;
 
-    imprimeValorSelo.textContent += i + 1 + " Selos: " + valorSelo;
-    imprimeValorPrenotacao.textContent += " Prenotação: " + prenotacao.total;
-    imprimeValorBib.textContent +=
-      document.getElementById("bib").value + " Bib: " + valorBib;
-    imprimeValorGuiaCom.textContent +=
-      quantGuiaCom * 2 + " Notfificação/Intimação: " + totalGuiaCom;
+    imprimeValorSelo.innerHTML += "<th scope='row'> Selos </th> <td>" + (i + 1) + "</td><td>" + valorSelo + "</td>";
+    imprimeValorPrenotacao.innerHTML += "<th scope='row'> Prenotação </th> <td>" + 1 + "</td><td>" + prenotacao.total + "</td>";
+    imprimeValorBib.innerHTML += "<th scope='row'> Bib </th> <td>" + document.getElementById("bib").value + "</td><td>" + valorBib + "</td>";
+    imprimeValorGuiaCom.innerHTML += "<th scope='row'> Not/Int... </th> <td>" + quantGuiaCom * 2 + "</td><td>" + totalGuiaCom + "</td>";
 
-    imprimeValorIss.textContent += "Iss: " + valorIss.toFixed(2);;
-    imprimeValorTotal.textContent += "Total: " + valorTotal.toFixed(2);;
+    imprimeValorIss.innerHTML += "<th scope='row'> ISS </th> <td ></td><td>" + valorIss.toFixed(2) + "</td>";
+    imprimeValorTotal.innerHTML += "<th scope='row'> TOTAL </th> <td ></td><td><strong>" + valorTotal.toFixed(2) + "</strong></td>";
     result.appendChild(imprimeValorSelo);
     result.appendChild(imprimeValorPrenotacao);
     if (document.getElementById("bib").value != 0) {

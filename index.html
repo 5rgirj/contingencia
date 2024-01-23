@@ -34,7 +34,6 @@
       crossorigin="anonymous"
     />
 
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -265,6 +264,7 @@
             >Informe a quantidade de envolvidos</small
           >
           <br /><br />
+          <!-- Button trigger modal -->
           <button id="adicionarElemento" type="button" class="btn btn-success">
             +
           </button>
@@ -275,15 +275,15 @@
             id="calcularEmolumentos"
             type="button"
             class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
           >
             Calcular
           </button>
           <button id="btnRecarregar" class="btn btn-secondary">limpar</button>
         </div>
       </div>
-      <div class="text-center">
-        <ul id="result"></ul>
-      </div>
+
       <!-- FOOTER -->
       <footer class="container">
         <p class="float-end"><a href="#">Back to top</a></p>
@@ -292,6 +292,58 @@
           <a href="#">Privacy</a> &middot; <a href="#">Terms</a>
         </p>
       </footer>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                Resultado
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Emolumento</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody id="result">
+                  
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Bootstrap JavaScript Libraries -->
       <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
