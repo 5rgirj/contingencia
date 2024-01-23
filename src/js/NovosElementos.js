@@ -28,6 +28,8 @@ var idElementos = 0;
 var selects = document.querySelectorAll("select");
 adicionarElemento();
 function adicionarElemento() {
+  document.getElementById('adicionarElemento').disabled = true;
+
   var cardElement = document.createElement("div");
   cardElement.classList.add("card", "col-lg-3", "col-10", "m-4");
   cardElement.id = "cardElement" + idElementos;
@@ -91,6 +93,7 @@ document
 
 //Função Gera Itens baseado na seleçãod o usuario
 function geraItem(item, id) {
+  document.getElementById('adicionarElemento').disabled = false;
   //Componentes
   //DATA
   // Gera um componente input Para Data
@@ -98,6 +101,7 @@ function geraItem(item, id) {
   inputDate.type = "date";
   inputDate.className = "form-control";
   inputDate.name = "data";
+  inputDate.tabIndex = 2;
 
   //Label
   var labelDate = document.createElement("label");
@@ -120,6 +124,7 @@ function geraItem(item, id) {
   inputValor.name = "moeda";
   inputValor.step = "0.01";
   inputValor.min = "0.01";
+  inputValor.tabIndex = 1 ;
 
   var inputReserva = document.createElement("input");
   inputReserva.type = "number";

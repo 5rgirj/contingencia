@@ -259,13 +259,14 @@
             step="1.00"
             min="1.00"
             maxlength="10"
+            tabindex="3"
           />
           <small id="helpId" class="form-text text-muted"
             >Informe a quantidade de envolvidos</small
           >
           <br /><br />
           <!-- Button trigger modal -->
-          <button id="adicionarElemento" type="button" class="btn btn-success">
+          <button id="adicionarElemento" type="button" class="btn btn-success" disabled>
             +
           </button>
           <button id="removerElemento" type="button" class="btn btn-danger">
@@ -277,6 +278,7 @@
             class="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
+            tabindex="4"
           >
             Calcular
           </button>
