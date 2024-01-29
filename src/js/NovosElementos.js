@@ -5,7 +5,7 @@ const elementos = [
   "Registro Simples",
   "1ª Aquisição",
   "1ª Aquisição com SFH",
-  "Alienação ou Mutuo",
+  "Alienação ou Penhora",
   "Locação",
   "Nua Propriedade",
   "Doação c/ Reserva de Usufruto",
@@ -13,8 +13,8 @@ const elementos = [
   "Instituição de Condominio",
   "Averbação c/ Valor Econômico",
   "Averbação",
-  "Desmembramento/Remembramento",
-  "Convenção e Condomínio",
+  "Desmembramento / Remembramento",
+  "Convenção de Condomínio",
   "Certidão",
   "Intimação Devedor",
   "Intimação em Geral",
@@ -388,25 +388,55 @@ document
       var campos = elemento.getElementsByClassName("form-control");
       var valor;
       var data;
+      var qtItem = 1;
+      var qtSelo = 1;
 
       // Obter valores dos campos
       var tipo = elemento.querySelector("select").value;
       if (tipo > 0 && tipo < 5) {
         valor = campos[0].value;
         data = campos[1].value;
-        quantGuiaCom += 1;
+        tipo != 4? quantGuiaCom += 1: quantGuiaCom += 0
       }
       if (tipo == 5) {
+        if(campos[1].value == 0 ) campos[1].value = 12;
         valor = campos[0].value * campos[1].value;
         data = campos[2].value;
       }
-      if (tipo == 6) {
+      if (tipo > 5 && tipo < 8) {
         valor = campos[0].value / 2;
         data = campos[1].value;
       }
       if (tipo > 7 && tipo < 10) {
         valor = Number(campos[0].value) + Number(campos[1].value);
         data = campos[2].value;
+      }
+      if (tipo == 10) {
+        valor = campos[0].value;
+        data = campos[1].value;
+      }
+      if (tipo == 11){
+        qtItem = campos[0].value;
+        valor = campos[0].value;
+        qtSelo += Number(campos[0].value) - 1 ;
+        data = Date();
+      }
+      if (tipo == 12){
+        qtItem = campos[0].value;
+        valor = campos[0].value;
+        qtSelo += Number(campos[0].value) - 1;
+        data = Date();
+      }
+      if (tipo == 13){
+        qtItem = campos[0].value;
+        qtSelo += Number(campos[0].value);
+        valor = qtItem;
+        data = Date()
+      }
+      if (tipo == 14){
+        qtItem = campos[0].value;
+        valor = campos[0].value;
+        data = Date();
       }
 
       console.log(tipo, valor, data);
@@ -419,7 +449,7 @@ document
       totalEmol += emolumento.valor;
       totalPmcmv += emolumento.pmcmv;
       var result = document.getElementById("result");
-      imprimeValor.innerHTML += "<th scope='row'>" + elementos[tipo] + "</th> <td>" + 1 + "</td><td>" + emolumento.total + "</td>";
+      imprimeValor.innerHTML += "<th scope='row'>" + elementos[tipo] + "</th> <td>" + qtItem + "</td><td>" + emolumento.total + "</td>";
       result.appendChild(imprimeValor);
     }
     var imprimeValorTotal = document.createElement("tr");
@@ -429,7 +459,9 @@ document
     var imprimeValorGuiaCom = document.createElement("tr");
     var imprimeValorIss = document.createElement("tr");
 
-    var valorSelo = (i + 1) * 2.59;
+    console.log(qtSelo);
+    qtSelo = qtSelo + i 
+    var valorSelo = qtSelo * 2.59; //Corrigir o calculo de selos, para averbações, convenções e tudo que tenha unidades
     var valorPrenotacao = 29.14;
     var valorGuiaCom = 41.91 * (quantGuiaCom * 2);
     var guiaComPmcmv = 0.83 * (quantGuiaCom * 2);
@@ -448,7 +480,7 @@ document
     var valorTotal =
       valorSelo + valorBib + prenotacao.total + total + valorIss + totalGuiaCom;
 
-    imprimeValorSelo.innerHTML += "<th scope='row'> Selos </th> <td>" + (i + 1) + "</td><td>" + valorSelo + "</td>";
+    imprimeValorSelo.innerHTML += "<th scope='row'> Selos </th> <td>" + qtSelo + "</td><td>" + valorSelo + "</td>";
     imprimeValorPrenotacao.innerHTML += "<th scope='row'> Prenotação </th> <td>" + 1 + "</td><td>" + prenotacao.total + "</td>";
     imprimeValorBib.innerHTML += "<th scope='row'> Bib </th> <td>" + document.getElementById("bib").value + "</td><td>" + valorBib + "</td>";
     imprimeValorGuiaCom.innerHTML += "<th scope='row'> Not/Int... </th> <td>" + quantGuiaCom * 2 + "</td><td>" + totalGuiaCom + "</td>";
