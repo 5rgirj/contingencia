@@ -15,12 +15,7 @@ const elementos = [
   "Averbação",
   "Desmembramento / Remembramento",
   "Convenção de Condomínio",
-  "Certidão",
-  "Intimação Devedor",
-  "Intimação em Geral",
-  "Exame de Legalidade",
-  "Reconhecimento de Usucapião",
-  "Publicidade Eletrônica",
+  "Certidão"
 ];
 
 var idElementos = 0;
@@ -424,7 +419,7 @@ document
       if (tipo == 12){
         qtItem = campos[0].value;
         valor = campos[0].value;
-        qtSelo += Number(campos[0].value) - 1;
+        qtSelo += Number(campos[0].value) - 1 ;
         data = Date();
       }
       if (tipo == 13){
