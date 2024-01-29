@@ -266,7 +266,12 @@
           >
           <br /><br />
           <!-- Button trigger modal -->
-          <button id="adicionarElemento" type="button" class="btn btn-success" disabled>
+          <button
+            id="adicionarElemento"
+            type="button"
+            class="btn btn-success"
+            disabled
+          >
             +
           </button>
           <button id="removerElemento" type="button" class="btn btn-danger">
@@ -282,11 +287,8 @@
           >
             Calcular
           </button>
-          <button id="btnRecarregar" class="btn btn-secondary">limpar</button>
         </div>
       </div>
-
-
 
       <!-- Modal -->
       <div
@@ -320,20 +322,13 @@
                     <th scope="col">Total</th>
                   </tr>
                 </thead>
-                <tbody id="result">
-                  
-                </tbody>
+                <tbody id="result"></tbody>
               </table>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
+              <button id="btnRecarregar" class="btn btn-secondary">
+                limpar
               </button>
-              <button type="button" class="btn btn-primary">Understood</button>
             </div>
           </div>
         </div>
