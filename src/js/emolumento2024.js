@@ -96,7 +96,7 @@ class Emolumento {
             (valor - 1108957.58) % 110895.75 !== 0
               ? Math.floor((valor - 1108957.58) / 110895.753 + 1) *
                   valorPorFaixa +
-                4074.76
+                  4266.98
               : (valor / 110895.75) * valorPorFaixa + 4266.98); //Calcula a regra descrita nas notas integrantes nº1 para valores acima de 423600,14
 
       if (this.valor > taxaJudiciariaMax * 4) {
