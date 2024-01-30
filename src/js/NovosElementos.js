@@ -26,7 +26,7 @@ function adicionarElemento() {
   document.getElementById('adicionarElemento').disabled = true;
 
   var cardElement = document.createElement("div");
-  cardElement.classList.add("card", "col-lg-3", "col-10", "m-4");
+  cardElement.classList.add("card","col-10", "col-md-6", "col-lg-3",  "m-4");
   cardElement.id = "cardElement" + idElementos;
 
   var cardBodyElement = document.createElement("div");
@@ -78,6 +78,10 @@ function removerElemento() {
 document.getElementById("btnRecarregar").addEventListener("click", function () {
   // Recarrega a página
   location.reload();
+});
+document.getElementById("btnImprimir").addEventListener("click", function () {
+  // Recarrega a página
+  window.print();
 });
 document
   .getElementById("adicionarElemento")
@@ -440,11 +444,13 @@ document
 
       var emolumento = new Emolumento(valor, data, tipo);
       emolumento.apresentar();
+      //apresentar o valor
+      if (valor == 0) {valor = "Mínimo"} else  {valor = parseFloat(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })};
       total += emolumento.total;
       totalEmol += emolumento.valor;
       totalPmcmv += emolumento.pmcmv;
       var result = document.getElementById("result");
-      imprimeValor.innerHTML += "<th scope='row'>" + elementos[tipo] + "</th> <td>" + qtItem + "</td><td>" + emolumento.total + "</td>";
+      imprimeValor.innerHTML += "<th scope='row'>" + elementos[tipo] + "<br><small class='text-secondary fw-normal'>Valor: " + valor  + "</small>" + "</th> <td>" + qtItem + "</td><td>" + emolumento.total + "</td>";
       result.appendChild(imprimeValor);
     }
     var imprimeValorTotal = document.createElement("tr");
