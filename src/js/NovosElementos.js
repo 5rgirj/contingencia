@@ -15,7 +15,7 @@ const elementos = [
   "Averbação",
   "Desmembramento / Remembramento",
   "Convenção de Condomínio",
-  "Certidão"
+  "Certidão",
 ];
 
 var idElementos = 0;
@@ -23,10 +23,10 @@ var idElementos = 0;
 var selects = document.querySelectorAll("select");
 adicionarElemento();
 function adicionarElemento() {
-  document.getElementById('adicionarElemento').disabled = true;
+  document.getElementById("adicionarElemento").disabled = true;
 
   var cardElement = document.createElement("div");
-  cardElement.classList.add("card","col-10", "col-md-6", "col-lg-3",  "m-4");
+  cardElement.classList.add("card", "col-10", "col-md-6", "col-lg-3", "m-4");
   cardElement.id = "cardElement" + idElementos;
 
   var cardBodyElement = document.createElement("div");
@@ -92,7 +92,7 @@ document
 
 //Função Gera Itens baseado na seleçãod o usuario
 function geraItem(item, id) {
-  document.getElementById('adicionarElemento').disabled = false;
+  document.getElementById("adicionarElemento").disabled = false;
   //Componentes
   //DATA
   // Gera um componente input Para Data
@@ -123,7 +123,7 @@ function geraItem(item, id) {
   inputValor.name = "moeda";
   inputValor.step = "0.01";
   inputValor.min = "0.01";
-  inputValor.tabIndex = 1 ;
+  inputValor.tabIndex = 1;
 
   var inputReserva = document.createElement("input");
   inputReserva.type = "number";
@@ -261,7 +261,7 @@ function geraItem(item, id) {
 
   var titulo = document.createElement("h3");
   titulo.textContent = elementos[item];
-  titulo.className = "text-center"
+  titulo.className = "text-center";
   //fimComponentes
 
   console.log("Gera item: " + item + " do elemento: " + (id - 1));
@@ -380,6 +380,7 @@ document
     var totalEmol = 0;
     var totalPmcmv = 0;
     var quantGuiaCom = 0;
+    var pAquisicao = 0;
 
     for (var i = 0; i < idElementos; i++) {
       //obter o elemento
@@ -395,10 +396,11 @@ document
       if (tipo > 0 && tipo < 5) {
         valor = campos[0].value;
         data = campos[1].value;
-        tipo != 4? quantGuiaCom += 1: quantGuiaCom += 0
+        tipo != 4 ? (quantGuiaCom += 1) : (quantGuiaCom += 0);
+        tipo == 2 ? (pAquisicao = 1) : (pAquisicao = 0);
       }
       if (tipo == 5) {
-        if(campos[1].value == 0 ) campos[1].value = 12;
+        if (campos[1].value == 0) campos[1].value = 12;
         valor = campos[0].value * campos[1].value;
         data = campos[2].value;
       }
@@ -414,25 +416,25 @@ document
         valor = campos[0].value;
         data = campos[1].value;
       }
-      if (tipo == 11){
+      if (tipo == 11) {
         qtItem = campos[0].value;
         valor = campos[0].value;
-        qtSelo += Number(campos[0].value) - 1 ;
+        qtSelo += Number(campos[0].value) - 1;
         data = Date();
       }
-      if (tipo == 12){
+      if (tipo == 12) {
         qtItem = campos[0].value;
         valor = campos[0].value;
-        qtSelo += Number(campos[0].value) - 1 ;
+        qtSelo += Number(campos[0].value) - 1;
         data = Date();
       }
-      if (tipo == 13){
+      if (tipo == 13) {
         qtItem = campos[0].value;
         qtSelo += Number(campos[0].value);
         valor = qtItem;
-        data = Date()
+        data = Date();
       }
-      if (tipo == 14){
+      if (tipo == 14) {
         qtItem = campos[0].value;
         valor = campos[0].value;
         data = Date();
@@ -445,12 +447,29 @@ document
       var emolumento = new Emolumento(valor, data, tipo);
       emolumento.apresentar();
       //apresentar o valor
-      if (valor == 0) {valor = "Mínimo"} else  {valor = parseFloat(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })};
+      if (valor == 0) {
+        valor = "Mínimo";
+      } else {
+        valor = parseFloat(valor).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+      }
       total += emolumento.total;
       totalEmol += emolumento.valor;
       totalPmcmv += emolumento.pmcmv;
       var result = document.getElementById("result");
-      imprimeValor.innerHTML += "<th scope='row'>" + elementos[tipo] + "<br><small class='text-secondary fw-normal'>Valor: " + valor  + "</small>" + "</th> <td>" + qtItem + "</td><td>" + emolumento.total + "</td>";
+      imprimeValor.innerHTML +=
+        "<th scope='row'>" +
+        elementos[tipo] +
+        "<br><small class='text-secondary fw-normal'>Valor: " +
+        valor +
+        "</small>" +
+        "</th> <td>" +
+        qtItem +
+        "</td><td>" +
+        emolumento.total +
+        "</td>";
       result.appendChild(imprimeValor);
     }
     var imprimeValorTotal = document.createElement("tr");
@@ -461,33 +480,67 @@ document
     var imprimeValorIss = document.createElement("tr");
 
     console.log(qtSelo);
-    qtSelo = qtSelo + i 
+    qtSelo = qtSelo + i;
     var valorSelo = qtSelo * 2.59; //Corrigir o calculo de selos, para averbações, convenções e tudo que tenha unidades
     var valorPrenotacao = 29.14;
+    var valorPrenotacaoPmcmv = 0.58;
+    var prenotacao;
     var valorGuiaCom = 41.91 * (quantGuiaCom * 2);
     var guiaComPmcmv = 0.83 * (quantGuiaCom * 2);
-    var totalGuiaCom = 56.97 * (quantGuiaCom * 2);
+    var totalGuiaCom;
+    if (pAquisicao == 1) {
+      totalGuiaCom = valorGuiaCom + guiaComPmcmv;
+      prenotacao = valorPrenotacao + valorPrenotacaoPmcmv;
+    } else {
+      totalGuiaCom = 56.97 * (quantGuiaCom * 2);
+      prenotacao = 39.6;
+    }
     var valorBib = Number(document.getElementById("bib").value) * 29.39;
-    var prenotacao = new Emolumento(valorPrenotacao, Date(), "acessorio");
 
     var valorIss =
       (totalEmol +
         totalPmcmv +
-        prenotacao.valor +
-        prenotacao.pmcmv +
+        valorPrenotacao +
+        valorPrenotacaoPmcmv +
         valorGuiaCom +
         guiaComPmcmv) *
       0.05263157;
     var valorTotal =
-      valorSelo + valorBib + prenotacao.total + total + valorIss + totalGuiaCom;
+      valorSelo + valorBib + prenotacao + total + valorIss + totalGuiaCom;
 
-    imprimeValorSelo.innerHTML += "<th scope='row'> Selos </th> <td>" + qtSelo + "</td><td>" + valorSelo + "</td>";
-    imprimeValorPrenotacao.innerHTML += "<th scope='row'> Prenotação </th> <td>" + 1 + "</td><td>" + prenotacao.total + "</td>";
-    imprimeValorBib.innerHTML += "<th scope='row'> Bib </th> <td>" + document.getElementById("bib").value + "</td><td>" + valorBib + "</td>";
-    imprimeValorGuiaCom.innerHTML += "<th scope='row'> Not/Int... </th> <td>" + quantGuiaCom * 2 + "</td><td>" + totalGuiaCom + "</td>";
+    imprimeValorSelo.innerHTML +=
+      "<th scope='row'> Selos </th> <td>" +
+      qtSelo +
+      "</td><td>" +
+      valorSelo +
+      "</td>";
+    imprimeValorPrenotacao.innerHTML +=
+      "<th scope='row'> Prenotação </th> <td>" +
+      1 +
+      "</td><td>" +
+      prenotacao +
+      "</td>";
+    imprimeValorBib.innerHTML +=
+      "<th scope='row'> Bib </th> <td>" +
+      document.getElementById("bib").value +
+      "</td><td>" +
+      valorBib +
+      "</td>";
+    imprimeValorGuiaCom.innerHTML +=
+      "<th scope='row'> Not/Int... </th> <td>" +
+      quantGuiaCom * 2 +
+      "</td><td>" +
+      totalGuiaCom.toFixed(2) +
+      "</td>";
 
-    imprimeValorIss.innerHTML += "<th scope='row'> ISS </th> <td ></td><td>" + valorIss.toFixed(2) + "</td>";
-    imprimeValorTotal.innerHTML += "<th scope='row'> TOTAL </th> <td ></td><td><strong>" + valorTotal.toFixed(2) + "</strong></td>";
+    imprimeValorIss.innerHTML +=
+      "<th scope='row'> ISS </th> <td ></td><td>" +
+      valorIss.toFixed(2) +
+      "</td>";
+    imprimeValorTotal.innerHTML +=
+      "<th scope='row'> TOTAL </th> <td ></td><td><strong>" +
+      valorTotal.toFixed(2) +
+      "</strong></td>";
     result.appendChild(imprimeValorSelo);
     result.appendChild(imprimeValorPrenotacao);
     if (document.getElementById("bib").value != 0) {

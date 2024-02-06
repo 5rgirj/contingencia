@@ -190,8 +190,6 @@ class Emolumento {
 
     //Nota Integrante 8 Primeira Aquisição
     if (tipo == 2) {
-      this.valor = this.valor;
-      this.pmcmv = 0;
       this.fetj = 0;
       this.funperj = 0;
       this.fundperj = 0;
@@ -201,7 +199,6 @@ class Emolumento {
     //Nota Integrante 7 Primeira aquisição pelo sistema financeiro de habitação
     if (tipo == 3) {
       this.valor = this.valor / 2;
-      this.pmcmv = 0;
       this.fetj = 0;
       this.funperj = 0;
       this.fundperj = 0;

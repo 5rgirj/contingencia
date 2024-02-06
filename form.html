@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Dados</title>
+    <!-- Adicione as referências para o Bootstrap CSS e JS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Formulário de Dados</h2>
+
+    <form id="meuFormulario">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="data">Data:</label>
+                <input type="date" class="form-control" id="data" name="data" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="hora">Hora:</label>
+                <input type="time" class="form-control" id="hora" name="hora" readonly>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="protocolo">Protocolo:</label>
+            <input type="number" class="form-control" id="protocolo" name="protocolo" pattern="\d{6}" title="Digite um número de 6 dígitos" required>
+        </div>
+
+        <div class="form-group">
+            <label for="imovel">Imóvel:</label>
+            <input type="text" class="form-control" id="imovel" name="imovel" required>
+        </div>
+
+        <div class="form-group">
+            <label for="titulo">Título:</label>
+            <select class="form-control" id="titulo" name="titulo" required>
+                <option value="titulo1">Título 1</option>
+                <option value="titulo2">Título 2</option>
+                <!-- Adicione mais opções conforme necessário -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="apresentante">Apresentante:</label>
+            <input type="text" class="form-control" id="apresentante" name="apresentante" required>
+        </div>
+
+        <div class="form-group">
+            <label for="adquirente">Adquirente:</label>
+            <input type="text" class="form-control" id="adquirente" name="adquirente" required>
+        </div>
+
+        <div class="form-group">
+            <label for="observacao">Observação:</label>
+            <textarea class="form-control" id="observacao" name="observacao" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="formaPagamento">Forma de Pagamento:</label>
+            <select class="form-control" id="formaPagamento" name="formaPagamento" required>
+                <option value="pagamento1">Pagamento 1</option>
+                <option value="pagamento2">Pagamento 2</option>
+                <!-- Adicione mais opções conforme necessário -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="usuario">Usuário:</label>
+            <input type="text" class="form-control" id="usuario" name="usuario" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
+
+<!-- Adicione as referências para o Bootstrap JS e o jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Preenche automaticamente a data e a hora
+    var dataAtual = new Date();
+    var dataFormatada = dataAtual.toISOString().slice(0,10);
+    var horaAtual = dataAtual.toTimeString().slice(0,5);
+
+    document.getElementById('data').value = dataFormatada;
+    document.getElementById('hora').value = horaAtual;
+</script>
+
+</body>
+</html>
