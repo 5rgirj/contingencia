@@ -397,7 +397,7 @@ document
         valor = campos[0].value;
         data = campos[1].value;
         tipo != 4 ? (quantGuiaCom += 1) : (quantGuiaCom += 0);
-        tipo == 2 ? (pAquisicao = 1) : (pAquisicao = 0);
+        tipo == 2 || tipo ==3 ? (pAquisicao = 1) : (pAquisicao = 0);
       }
       if (tipo == 5) {
         if (campos[1].value == 0) campos[1].value = 12;
