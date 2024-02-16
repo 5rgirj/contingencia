@@ -382,6 +382,20 @@ document
     var quantGuiaCom = 0;
     var pAquisicao = 0;
 
+    var cabecalho = document.getElementById("cabecalho");
+
+    var protocolo = document.getElementById("protocolo").value;
+    var endereco = document.getElementById("endereco").value;
+    var apresentante = document.getElementById("apresentante").value;
+    var caixa = document.getElementById("caixa").value;
+
+
+    var imprimeCabecalho = document.createElement("div");
+    imprimeCabecalho.classList.add("modal-title","fs-5");
+    imprimeCabecalho.innerHTML += "<p class='h3'>Protocolo: " + protocolo + "</p><p class='resultado fs-6'>Endereço: " + endereco + "</p><p class='resultado fs-6'> Apresentante: " +  apresentante + "</p><p class='resultado fs-6'>Caixa: " + caixa + "</p>"; 
+    cabecalho.appendChild(imprimeCabecalho);
+
+
     for (var i = 0; i < idElementos; i++) {
       //obter o elemento
       var elemento = document.getElementById("card-body" + i);
@@ -436,6 +450,7 @@ document
       }
       if (tipo == 14) {
         qtItem = campos[0].value;
+        qtSelo += -1;
         valor = campos[0].value;
         data = Date();
       }
